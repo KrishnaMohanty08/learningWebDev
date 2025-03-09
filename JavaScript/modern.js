@@ -79,3 +79,55 @@ class Teacher extends Person{
 per=new Teacher("hero","bTech   ");
 per.walk();
 per.teach();
+
+//Promise
+let p1 =new Promise((resolve,reject)=>{
+    console.log("Pending");
+    setTimeout(()=>{
+        console.log("I m alert in promise");
+        resolve(56);
+        //reject(new Error("Rejected"));
+    },2000);
+    
+})
+
+//promise ha 2 states resolve and result and 
+let p2 =new Promise((resolve,reject)=>{
+    console.log("Pending");
+    setTimeout(()=>{
+        console.log("I m alert in promise");
+        //resolve(56);
+        reject(new Error("Rejected"));
+    },2000);
+    
+})
+p1.then((value)=>{
+    console.log(value);
+})
+p2.then((value)=>{
+    console.log(value);
+},(error)=>{
+    console.log("nehi mila");
+})
+//synchronization
+//a async function returns a promise
+async function harry(){
+    let delhiWeather =new Promise((resolve,reject)=>{
+        setTimeout(()=>{
+            resolve("27 deg");
+        },1000)
+    })
+    let bangloreWeather =new Promise((resolve,reject)=>{
+        setTimeout(()=>{
+            resolve("21 deg");
+        },5000)
+    })
+    console.log("pls wait d");
+    let delhiW =await delhiWeather;
+    console.log("pls wait b");
+    let bangW =await bangloreWeather;
+    return [delhiW,bangW];
+}
+harry().then((x)=>{
+    console.log(x);
+})
