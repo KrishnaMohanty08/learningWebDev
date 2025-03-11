@@ -24,16 +24,10 @@ app.post('/', (req, res) => {
 app.put('/', (req, res) => {
     console.log("It's a PUT request");
     res.send('Hello World PUT!');
-});
-
-// DELETE request (Fixed)
-app.delete('/', (req, res) => {
+}).delete('/', (req, res) => {
     console.log("It's a DELETE request");
     res.send('Hello World DELETE!');
-});
-
-// JSON API endpoint (Fixed)
-app.get('/api', (req, res) => {
+}).get('/api', (req, res) => {
     console.log("JSON response sent");
     res.json({ a: 1, b: 2, c: 3, d: 4, name: "herray" });
 });
