@@ -19,15 +19,15 @@ function App() {
   }
   const onSubmit =async (data)=>{
     //await delay(2);
-    let r= await fetch ('http://localhost:3000/')
+    let r= await fetch ('http://localhost:3000/',{method:"POST",body:JSON.stringify(data)})
     let res =await r.text()
     console.log(data,res);
-    if(data.username!=="shubham"){
-      setError("notValid",{message:"Username or Password invalid"})
-    }
-    if(data.username==="meena"){
-      setError("notValid",{message:"User is Blocked"})
-    }
+    // if(data.username!="shubham"){
+    //   setError("notValid",{message:"Username or Password invalid"})
+    // }
+    // if(data.username=="meena"){
+    //   setError("block",{message:"User is Blocked"})
+    // }
   }
   return (
     <>
