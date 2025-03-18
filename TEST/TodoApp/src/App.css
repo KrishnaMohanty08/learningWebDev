@@ -1,0 +1,23 @@
+@import "tailwindcss";
+.tasks{
+    padding: 4px;
+    color: black;
+    background-color: beige;
+    font-size: small;
+    width: 100%;
+}
+.tasks:hover{
+    color:beige;
+    background-color:black;
+}
+.container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+    background-color: rgb(208, 252, 164);
+    max-width: auto;
+}
+
+
