@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{ useState} from 'react'
 import { useForm } from 'react-hook-form'
 
 const Form = ({onSubmit,todo}) => {
@@ -8,12 +8,12 @@ const Form = ({onSubmit,todo}) => {
     setError,
     formState:{errors,isSubmitting},
 }=useForm();
-    const [isSubmitted, setIsSubmitted] = React.useState(false)
+    const [isSubmitted, setIsSubmitted] = useState(false)
     const today=new Date().toISOString().split("T")[0]
     
   return (
     <>
-      {isSubmitted && <div>loading.ed</div>}
+      {isSubmitted && <div>loading...</div>}
       <div className="container">
       <form action="" onSubmit={handleSubmit(onSubmit)} className='text-black'>
 
@@ -55,9 +55,7 @@ const Form = ({onSubmit,todo}) => {
             <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">
               {todo ? "Update" : "Submit"}
             </button>
-            <button type="button" className="bg-gray-500 text-white px-4 py-2 rounded" onClick={() => onSubmit(null)}>
-              Cancel
-            </button>
+
           </div>
             
             
