@@ -95,19 +95,19 @@ const Header = () => {
                     {/* Todos */}
                     {todos.map(todo => {
                         const priorityStyle={
-                            Critical:{
+                            critical:{
                                 bgColor:"bg-red-500",
                                 color:"text-white"
                             },
-                            Important:{
+                            important:{
                                 bgColor:"bg-yellow-500"
                             },
-                            NotImp:{
+                            notImportant:{
                                 bgColor:"bg-white"
                                 
                             }
                         };
-                        const bgColor = priorityStyle[todo.Priority]?.bgColor || "bg-gray-200"; // Default to a fallback color
+                        const bgColor = priorityStyle[todo.Priority]?.bgColor || "bg-gray-300"; 
 
                         return (
                             <div key={todo.id} className={`cursor-pointer shadow-xl w-max h-max ${bgColor} rounded-lg items-center justify-center px-4`}>

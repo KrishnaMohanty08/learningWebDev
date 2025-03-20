@@ -1,28 +1,39 @@
-import React,{ useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Menu = () => {
 
-    const [Todo,setTodo]=useState("")
-    const [todos,setTodos]=useState([])
-    const [isFormOpen,setFormOpen] = useState(false)
+    const [filterTodo, setFilterTodo] = useState("")
+    const [Todos, setTodos] = useState(() => {
+        let todoString = localStorage.getItem("todos");
+        return todoString ? JSON.parse(todoString) : [];
+    })
 
-    const handleAdd =()=>{
-        console.log("add");
-        setTodos(null);
-        setFormOpen(true);
+    const handleToday = (todoID) => {
+        console.log("today work loading...");
+        const today = new Date().toISOString().split("T")[0];
+
+        const todayTask = Todos.filter((todo) => {
+            return todo.SubmissionDate === today
+        })
+
+        console.log("Today's task:", todayTask);
+        setFilterTodo(todayTask);
     }
-    const handleFormSumbit=data=>{
-        if(Todo){
-            setTodo(
-                Todo.map((todo)=>(todo.id===Todo.id?{...todo,...data}:todo)))
-        }else{
-            setTodo(
-                Todo.map((todo)=>([...todos,{id: Date.now(),...data}]))
-            )
+    useEffect(() => {
+        setFilterTodo(Todos);
+    }, [Todos])
+
+    const handlePriority = (event) => {
+        const sort = event.target.value;
+        if (sort === "all") {
+            setFilterTodo(Todos);
+        } else {
+            const priorityTasks = Todos.filter((todo) => todo.Priority === sort);
+            setFilterTodo(priorityTasks);
         }
-        setFormOpen(false);
     }
-    
+
+
     return (
         <>
             <div className="shadow-2xl bg-blue-300 shadow-md rounded-lg p-4  h-screen m-2">
@@ -51,21 +62,27 @@ const Menu = () => {
                     <h4 className="text-black font-semibold text-lg mb-3">Tasks</h4>
 
                     <div className="space-y-3">
-                        {/* UPCOMING */}
-                        <button className="cursor-pointer shadow-2xl flex items-center gap-2 bg-yellow-100 text-black font-semibold px-4 py-2 rounded-lg w-full shadow-md tasks ">
+                        {/* Critical */}
+                        <div className="cursor-pointer shadow-2xl flex items-center gap-2 bg-yellow-100 text-black font-semibold px-4 py-2 rounded-lg w-full shadow-md tasks ">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="black" className="size-5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
                             </svg>
-                            UPCOMING
-                        </button>
+
+                            <select className="text-sm " onChange={handlePriority}>
+                                <option className="text-sm text-black" value="critical">Critical</option>
+                                <option className="text-sm text-black" value="important">Important</option>
+                                <option className="text-sm text-black" value="notImportant">not Important</option>
+                            </select>
+                        </div>
 
                         {/* TODAY */}
-                        <button className="cursor-pointer shadow-2xl flex items-center gap-2 bg-yellow-100 text-black font-semibold px-4 py-2 rounded-lg w-full shadow-md tasks">
+                        <button onClick={handleToday} className="cursor-pointer shadow-2xl flex items-center gap-2 bg-yellow-100 text-black font-semibold px-4 py-2 rounded-lg w-full shadow-md tasks">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="black" className="size-5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
                             </svg>
                             Today
                         </button>
+
 
                         {/* CALENDAR */}
                         <button className="cursor-pointer shadow-2xl flex items-center gap-2 bg-yellow-100 text-black font-semibold px-4 py-2 rounded-lg w-full shadow-md tasks">
@@ -74,10 +91,25 @@ const Menu = () => {
                             </svg>
                             Calendar
                         </button>
+
+                        <div className="mt-4 p-2 bg-white shadow-md rounded-lg">
+                            <h3 className="text-lg font-bold text-black">Filtered Tasks</h3>
+                            {filterTodo.length === 0 ? (
+                                <p className="text-gray-500 text-black">No tasks found.</p>
+                            ) : (
+                                <ul>
+                                    {filterTodo.map((task, index) => (
+                                        <li key={index} className="text-black p-2 border-b border-gray-300">
+                                            {task.TodoName} - {task.Priority} - {task.SubmissionDate}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
                     </div>
                 </div>
-                
-                
+
+
 
             </div>
         </>

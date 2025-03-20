@@ -45,9 +45,9 @@ const Form = ({onSubmit,todo}) => {
             <br/>
             {/*Priority*/}  
             <select {...register("Priority")}>
-                <option value="Critical">Critical</option>
-                <option value="Important">Important</option>
-                <option value="">not Important</option>
+                <option value="critical">Critical</option>
+                <option value="important">Important</option>
+                <option value="not Important">not Important</option>
             </select>
 
           {/* Buttons */}

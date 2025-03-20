@@ -2,7 +2,6 @@ import React,{ useState } from 'react'
 import Header from './Components/Header.jsx'
 import Menu from './Components/Menu.jsx'
 import Footer from './Components/Footer.jsx'
-import Main from './Components/Try.jsx'
 import './App.css'
 
 function App() {
