@@ -1,0 +1,16 @@
+<!-- blogpages.ejs -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Blog Post</title>
+</head>
+<body>
+  <% if (myblog.length > 0) { %>
+    <h1><%= myblog[0].tittle %></h1>
+    <p><%= myblog[0].comment %></p>
+    <!-- Add more fields as needed -->
+  <% } else { %>
+    <h1>Blog post not found</h1>
+  <% } %>
+</body>
+</html>

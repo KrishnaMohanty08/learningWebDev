@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop data</title>
+</head>
+<body>
+    <h2>Items</h2>
+    <% if (typeof items !== 'undefined' && items.length > 0) { %>
+        <h1><%= items[1].name %></h1>
+        <p><%= items[1].desc %></p>
+        <p><%= items[1].price %></p>
+    <% } else { %>
+        <h1>Blog post not found</h1>
+    <% } %>
+    
+</body>
+</html>
