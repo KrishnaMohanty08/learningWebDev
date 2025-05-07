@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Navbar from './components/navBar'
+import Navbar from './components/Navbar'
 import Manager from './components/Manager'
 import './App.css'
 
