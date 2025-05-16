@@ -3,6 +3,7 @@ import "../globals.css";
 import Navbar from "../components/navbar";
 import { useEffect, useState } from "react";
 import { Roboto, Geist, Comic_Neue } from "next/font/google";
+import { signOut } from 'next-auth/react'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,6 +19,7 @@ const roboto = Roboto({
 });
 
 export default function Home() {
+
   const data = [
     {
       title: "FitiQue",
@@ -56,7 +58,7 @@ export default function Home() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 200); 
+    }, 200);
   }, []);
 
   return (
@@ -74,7 +76,7 @@ export default function Home() {
       ) : (
         <div>
           {/* Header */}
-          
+
           <div className={`${comic.className} flex justify-center relative`}>
             <h1
               onClick={clickedMe}
@@ -93,7 +95,19 @@ export default function Home() {
                 to touch me
               </span>
             )}
+            <button onClick={() => signOut({ callbackUrl: "/" })}>
+            <lord-icon
+                   src="https://cdn.lordicon.com/kdduutaw.json"
+                   trigger="hover"
+                   className="ml-0 rounded-3xl bg-white cursor-pointer hover:scale-110 transition-transform"
+                   style={{ width: "55px", height: "25px" }}>
+                 </lord-icon>
+                 Log out
+          </button>
+          
           </div>
+
+
           {/* Cards Section */}
           <div className="flex flex-wrap gap-4 justify-center m-4 px-2 box ">
             {data.map((item, index) => (

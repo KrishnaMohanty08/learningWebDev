@@ -10,15 +10,19 @@ import { useSession, signIn, signOut } from "next-auth/react"
 const comic = Comic_Neue({ weight: '400', subsets: ['latin'] });
 const geist = Geist({ weight: '400', subsets: ['latin'] });
 
-
 export default function Page() {
 
-  const { register, handleSubmit, watch, formState: { error } } = useForm();
+  const { register, handleSubmit, watch, formState: { errors,isSubmitting } } = useForm();
   const onSubmit = data => console.log(data);
 
   const { data: session } = useSession()
   console.log(session)
-  
+
+  const isValid = (password) => {
+    return (/[A-Z]/.test(password) && /[a-z]/.test(password) && /[1-9]/.test(password));
+
+  }
+
 
   return (
 
@@ -32,7 +36,6 @@ export default function Page() {
         />
       </div>
 
-      {/* Content Wrapper */}
       <div className="relative z-10 min-h-screen flex flex-col">
         <Navbar />
 
@@ -49,54 +52,74 @@ export default function Page() {
             ></lord-icon>
           </div>
 
-          <div className='px-4'>
-            <div className="mb-2">
-              <label className="block  text-md font-semibold text-gray-800">
-                Your Name
+          <div className='p-3'>
+            <div className="mb-2 flex flex-row items-center gap-2">
+              <label className=" text-lg font-semibold text-gray-800">
+                Name:
               </label>
               <input
                 type="text"
                 id="name"
                 name="name"
                 placeholder="Enter your name"
-                {...register("name")}
-                className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                required
+                {...register("name", { required: { value: true, message: "required field" }, minLength: { value: 5, message: "should be more than 5 character" } })}
+                className="w-full p-1 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+
               />
+              {errors.name && <div className='text-red-500 text-sm'>{errors.name.message}</div>}
             </div>
 
             {/* Date of Birth Input */}
-            <div className="mb-2">
-              <label htmlFor="dob" className="block text-md font-semibold text-gray-800">
-                Date of Birth
+            <div className="mb-2 flex flex-row items-center gap-2">
+              <label htmlFor="dob" className=" text-md font-semibold text-gray-800">
+                Date of Birth:
               </label>
               <input
-                {...register("dob")}
+                {...register("dob", { required: true })}
                 type="date"
                 id="dob"
                 name="dob"
-                className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-1 focus:ring-yellow-500"
-                required
+                className="w-full p-1 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+
               />
             </div>
-            <div className='mb-2'><label className="block text-md font-semibold text-gray-800">Password</label>
-              <input {...register("password")} type="password" id="password" name="password" required placeholder='******' className='w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-1 focus:ring-yellow-500' />
+
+            <div className='mb-2 flex flex-row items-center gap-2'>
+              <label className="text-md font-semibold text-gray-800">Password</label>
+              <input
+                {...register("password", {
+                  required: { value: true, message: "Password required" },
+                  validate: value =>
+                    isValid(value) || "Enter a strong password"
+                })}
+                type="password"
+                id="password"
+                name="password"
+                placeholder='******'
+                className='w-full p-1 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500'
+              />
               <a href="https://www.flaticon.com/free-icons/password" title="password icons"></a>
+              {errors.password && <p className='text-red-500 text-sm'>{errors.password.message}</p>}
             </div>
+
             <div className='flex justify-center px-2 flex-col '>
-              <button className={`${geist.className} bg-red-500 p-2  hover:bg-black hover:border-t cursor-pointer hover:shadow-lg hover:border-y-lg transition-transform duration-300 justify-center rounded-3xl my-2`}>
+
+              <button disabled={isSubmitting} className={`${geist.className} bg-red-500 p-2  hover:bg-black hover:border-t cursor-pointer hover:shadow-lg hover:border-y-lg transition-transform duration-300 justify-center rounded-3xl my-2`}>
                 Submit
               </button>
+
               <p className='text-sm text-gray-700 hover:underline justify-center items-align'>Don't have an account ? Signup</p>
             </div>
 
           </div>
 
           <hr className='border border-b-t m-2'></hr>
-          <div>
-            Not signed in <br />
-            <button onClick={() => signIn("github")}>Sign in using Github</button>
-            <button onClick={() => signIn("google")}>Sign in using Google</button>
+          <div className='flex justify-center items-align flex-row gap-6  text-black'>
+
+            <button onClick={() => signIn("github")} className='flex gap-1 cursor-pointer bg-white p-3 my-2 rounded-xl'>
+              <img src='./images/github.png ' className='w-4' /> Github</button>
+            <button onClick={() => signIn("google")} className='flex gap-1 cursor-pointer bg-white p-3 my-2 rounded-xl'>
+              <img src='./images/google.png ' className='w-4' /> Google</button>
           </div>
         </form>
       </div>
