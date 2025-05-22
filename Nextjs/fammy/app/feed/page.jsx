@@ -1,14 +1,13 @@
 "use client";
 import "../globals.css";
-import Navbar from "../components/navbar";
+import Navbar from "../../components/navbar";
 import { useEffect, useState } from "react";
-import { Roboto, Geist, Comic_Neue } from "next/font/google";
-import { signOut } from 'next-auth/react'
+import { Roboto, Comic_Neue } from "next/font/google";
+import { signOut } from "next-auth/react";
+import Button from "@mui/material/Button"; // Import Button from Material-UI
+import Chip from "@mui/material/Chip"; // Import Chip for tags
+import Sidebar from "@/components/Sidebar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 const comic = Comic_Neue({
   weight: "400",
   subsets: ["latin"],
@@ -19,54 +18,50 @@ const roboto = Roboto({
 });
 
 export default function Home() {
-
-  const data = [
-    {
-      title: "FitiQue",
-      disc: "It is a React website",
-      tech_stack: ["React", "Tailwind"],
-      repolink: "https://github.com/example/project1",
-    },
-    {
-      title: "FitiQue",
-      disc: "It is a React website",
-      tech_stack: ["React", "Tailwind"],
-      repolink: "https://github.com/example/project2",
-    },
-    {
-      title: "FitiQue",
-      disc: "It is a React website",
-      tech_stack: ["React", "Tailwind"],
-      repolink: "https://github.com/example/project3",
-    },
-    {
-      title: "FitiQue",
-      disc: "It is a React website",
-      tech_stack: ["React", "Tailwind"],
-      repolink: "https://github.com/example/project4",
-    },
-  ];
-
+  const [posts, setPosts] = useState([]);
   const [showWarning, setShowWarning] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const clickedMe = () => {
-    setShowWarning(true);
-    setTimeout(() => setShowWarning(false), 1000);
+
+  const updateLikes=()=>{
+    // "use server"
+    console.log("likes updated");
+  }
+  const updateDislikes=()=>{
+    // "use server"
+    console.log("dislikes updated");
+  }
+
+  const fetchData = async () => {
+    try {
+      let req = await fetch("https://dummyjson.com/posts");
+      let data = await req.json();
+      setPosts(data.posts); 
+    } catch (error) {
+      console.log("Error fetching data:", error);
+    } finally {
+      setLoading(false); 
+    }
   };
 
+  // const clickedMe = () => {
+  //   setShowWarning(true);
+  //   setTimeout(() => setShowWarning(false), 1000);
+  // };
+
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 200);
+    fetchData();
   }, []);
+
+
 
   return (
     <>
       <div className="absolute inset-0 -z-10 h-full w-full items-center px-19 py-24 [background:radial-gradient(180%_145%_at_10%_0%,#000_50%,#63e_120%)]"></div>
-
+      <Navbar />
+      <Sidebar/>
       {loading ? (
-        <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-white z-10">
           <lord-icon
             src="https://cdn.lordicon.com/ydhnbgpj.json"
             trigger="loop"
@@ -75,61 +70,35 @@ export default function Home() {
         </div>
       ) : (
         <div>
-          {/* Header */}
-
-          <div className={`${comic.className} flex justify-center relative`}>
-            <h1
-              onClick={clickedMe}
-              className="relative cursor-pointer justify-center items-center text-3xl py-2 font-bold"
-            >
-              FAMMY
-              <span
-                className={`hover:opacity-0 duration-1000 ${roboto.className} text-yellow-500`}
-              >
-                .com
-              </span>
-            </h1>
-            {showWarning && (
-              <span className="absolute border-2 bg-red-500 font-semibold border-red-500 left-[18rem] top-[41px] p-2 rounded-xl z-10">
-                Don't you dare<br />
-                to touch me
-              </span>
-            )}
-            <button onClick={() => signOut({ callbackUrl: "/" })}>
-            <lord-icon
-                   src="https://cdn.lordicon.com/kdduutaw.json"
-                   trigger="hover"
-                   className="ml-0 rounded-3xl bg-white cursor-pointer hover:scale-110 transition-transform"
-                   style={{ width: "55px", height: "25px" }}>
-                 </lord-icon>
-                 Log out
-          </button>
           
-          </div>
-
 
           {/* Cards Section */}
-          <div className="flex flex-wrap gap-4 justify-center m-4 px-2 box ">
-            {data.map((item, index) => (
-              <div key={index} className="containers">
-                <div className="px-2 text-center align-top">
-                  <h1 className="text-xl font-bold mb-2">{item.title}</h1>
-                  <p className="mb-2">{item.disc}</p>
-                  {item.tech_stack.length > 0 && (
-                    <h3 className="mb-2">
-                      Tech Stack: {item.tech_stack.join(", ")}
-                    </h3>
-                  )}
-                  {item.repolink && (
-                    <a
-                      href={item.repolink}
-                      className="text-blue-300 underline hover:text-blue-500"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Repo link
-                    </a>
-                  )}
+          <div className="flex flex-wrap gap-6 justify-center m-4 ml-39 mt-20">
+            {posts.slice(1,Math.random()*50).map((post) => (
+              <div key={post.id} className="containers">
+                <div className="px-2 text-left align-top rounded text-white">
+                  <h2 className="text-xl font-bold mb-2">{post.title}</h2>
+                  <div className="flex flex-wrap gap-2 mb-2">
+                    {post.tags.map((tag, index) => (
+                      <Chip key={index} label={tag} variant="outlined" className="text-white"/>
+                    ))}
+                  </div>
+                  <div>
+                    <span className="mb-2 text-green-500 mr-10">
+                      Likes: {post.reactions.likes}
+                    </span>
+                    <span className="mb-2 text-red-500">
+                      Dislikes: {post.reactions.dislikes}
+                    </span>
+                    <p className={`mb-2 text-white ${comic.className} p-2 rounded`}>
+                      {post.body}
+                    </p>
+                    <div className="flex justify-between ">
+                      <Button variant="contained" onClick={updateLikes}>Like </Button>
+                      <Button variant="contained" onClick={updateDislikes}>DisLike</Button>
+                    </div>
+                    
+                  </div>
                 </div>
               </div>
             ))}

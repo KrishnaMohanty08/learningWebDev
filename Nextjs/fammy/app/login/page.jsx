@@ -1,9 +1,10 @@
 'use client';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Navbar from '../components/navbar';
+import Navbar from '../../components/navbar';
 import { Comic_Neue, Geist } from 'next/font/google';
 import Link from 'next/link';
+import Country from '../../components/country.jsx'
 import { useSession, signIn, signOut } from "next-auth/react"
 
 
@@ -101,7 +102,7 @@ export default function Page() {
               <a href="https://www.flaticon.com/free-icons/password" title="password icons"></a>
               {errors.password && <p className='text-red-500 text-sm'>{errors.password.message}</p>}
             </div>
-
+            <Country/>
             <div className='flex justify-center px-2 flex-col '>
 
               <button disabled={isSubmitting} className={`${geist.className} bg-red-500 p-2  hover:bg-black hover:border-t cursor-pointer hover:shadow-lg hover:border-y-lg transition-transform duration-300 justify-center rounded-3xl my-2`}>

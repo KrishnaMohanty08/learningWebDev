@@ -1,6 +1,6 @@
 "use client";
 import "./globals.css";
-import Navbar from "./components/navbar";
+import Navbar from "../components/navbar";
 import Image from "next/image";
 import { Roboto, Geist, Comic_Neue } from "next/font/google";
 
@@ -20,7 +20,7 @@ const roboto = Roboto({
 export default function Home() {
   return (
     <>
-      <div className="absolute top-0 -z-10 h-1000 w-full bg-white"><div className="absolute bottom-auto left-auto right-0 top-0 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[rgba(173,109,244,0.5)] opacity-50 blur-[80px]"></div></div>
+      <div className="absolute top-0 -z-10 h-150 w-full bg-white"><div className="absolute bottom-auto left-auto right-0 top-0 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[rgba(173,109,244,0.5)] opacity-50 blur-[80px]"></div></div>
 
       {/* Navbar Container */}
       <Navbar/>

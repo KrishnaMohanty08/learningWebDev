@@ -19,20 +19,19 @@ body {
 }
 
 .containers {
-  background: linear-gradient( #310127 10%, #a377b3 40%, #090624 80%);
-  border-radius: 10px;
-  justify-content: center;
+  background: rgb(62, 62, 62);
+  border-radius: 2px;
   align-items: center;
   display: flex;
   flex-direction: column;
-  flex: 1 1 300px;
-  max-width: 100%;
+  flex: 1 300px;
+  max-width: 90%;
   padding: 1rem;
   color: #fff;
   text-shadow:
     0 0 40px #000000;
   border: 1px solid #ffffff;
-  transition: box-shadow 0.3s ease, border 0.3s ease;
+  transition: box-shadow 0.3s ease;
 }
 
 .containers:hover {
@@ -40,7 +39,6 @@ body {
   border: 2px solid #00fff7;
 }
 
-/* Make box stack cards vertically on smaller screens */
 @media (max-width: 768px) {
   .box {
     flex-direction: column;
