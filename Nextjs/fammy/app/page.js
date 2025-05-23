@@ -2,6 +2,7 @@
 import "./globals.css";
 import Navbar from "../components/navbar";
 import Image from "next/image";
+import Footer from "@/components/footer";
 import { Roboto, Geist, Comic_Neue } from "next/font/google";
 
 const geistSans = Geist({
@@ -20,13 +21,13 @@ const roboto = Roboto({
 export default function Home() {
   return (
     <>
-      <div className="absolute top-0 -z-10 h-150 w-full bg-white"><div className="absolute bottom-auto left-auto right-0 top-0 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[rgba(173,109,244,0.5)] opacity-50 blur-[80px]"></div></div>
+      <div className="absolute top-0 -z-10 h-200 w-full bg-white"><div className="absolute bottom-auto left-auto right-0 top-0 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[rgba(173,109,244,0.5)] opacity-50 blur-[80px]"></div></div>
 
       {/* Navbar Container */}
       <Navbar/>
       {/*Blog display */}
-      <main className="m-2">
-        <div className="flex my-5 text-black p-2 ">
+      <main className="m-7 mt-20">
+        <div className="flex my-5 gap-5 text-black p-4 ">
           <div className="duration-300 flex p-1 m-2 border-b border-r border-black rounded-xl shadow-lg ">
             <Image src='/images/p1.png' width={1000} height={750} alt="family photo" className="transform trasition duration-100 cursor-pointer hover:scale-105 rounded-xl"></Image>
           </div>
@@ -72,6 +73,7 @@ export default function Home() {
         </div>
 
       </main>
+      <Footer/>
     </>
   );
 }

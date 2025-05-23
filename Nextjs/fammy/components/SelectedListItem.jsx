@@ -1,10 +1,7 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
+import {Button,Box,List,ListItemButton,ListItemIcon,ListItemText} from '@mui/material';
 import Divider from '@mui/material/Divider';
+import { signOut } from 'next-auth/react';
 
 export default function SelectedListItem() {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
@@ -47,8 +44,15 @@ export default function SelectedListItem() {
         >
           <ListItemText primary="Spam" />
         </ListItemButton>
+
       </List>
-      
+      <Button
+        onClick={() => signOut({ callbackUrl: '/login' })}
+        className="fixed top-35 rounded-full absolute signout-button"
+        variant='contained'
+      >
+        Sign Out
+      </Button>
     </Box>
   );
 }

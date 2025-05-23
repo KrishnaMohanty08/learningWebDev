@@ -7,6 +7,9 @@ import Button from "@mui/material/Button"; // Import Button from Material-UI
 import Chip from "@mui/material/Chip";
 import { Avatar } from "@mui/material"; // Import Chip for tags
 import Sidebar from "@/components/Sidebar";
+import { getSession,useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
 
 const comic = Comic_Neue({
   weight: "400",
@@ -17,19 +20,12 @@ const roboto = Roboto({
   subsets: ["latin"],
 });
 
-export default function Home() {
+export default  function Home() {
+
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-
-
-  const updateLikes = () => {
-    // "use server"
-    console.log("likes updated");
-  }
-  const updateDislikes = () => {
-    // "use server"
-    console.log("dislikes updated");
-  }
+  const { data: session, status } = useSession()
+  const router = useRouter()
 
   const fetchData = async () => {
     try {
@@ -45,8 +41,22 @@ export default function Home() {
   };
 
   useEffect(() => {
+    if(status!=='loading' && !session){
+      router.push('/login');
+      return;
+    }
     fetchData();
-  }, []);
+  }, [status,router,session]);
+
+  const updateLikes = () => {
+    // "use server"
+    console.log("likes updated");
+  }
+  const updateDislikes = () => {
+    // "use server"
+    console.log("dislikes updated");
+  }
+
 
 
   return (
@@ -68,7 +78,7 @@ export default function Home() {
 
           {/* Cards Section */}
           <div className="flex flex-wrap gap-6 justify-center m-4 ml-39 mt-20">
-            {posts.slice(1, Math.random() * 50).map((post) => (
+            {posts.slice(Math.random()*15, Math.random() * 50).map((post) => (
 
               <div key={post.id} className="containers">
                 <div className="px-2 text-left align-top rounded text-white">
