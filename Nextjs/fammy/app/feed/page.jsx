@@ -3,9 +3,9 @@ import "../globals.css";
 import Navbar from "../../components/navbar";
 import { useEffect, useState } from "react";
 import { Roboto, Comic_Neue } from "next/font/google";
-import { signOut } from "next-auth/react";
 import Button from "@mui/material/Button"; // Import Button from Material-UI
-import Chip from "@mui/material/Chip"; // Import Chip for tags
+import Chip from "@mui/material/Chip";
+import { Avatar } from "@mui/material"; // Import Chip for tags
 import Sidebar from "@/components/Sidebar";
 
 const comic = Comic_Neue({
@@ -19,7 +19,6 @@ const roboto = Roboto({
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
-  const [showWarning, setShowWarning] = useState(false);
   const [loading, setLoading] = useState(true);
 
 
@@ -34,8 +33,9 @@ export default function Home() {
 
   const fetchData = async () => {
     try {
-      let req = await fetch("https://dummyjson.com/posts");
+      let req = await fetch("/api/posts");
       let data = await req.json();
+      console.log(data.posts)
       setPosts(data.posts); 
     } catch (error) {
       console.log("Error fetching data:", error);
@@ -44,15 +44,9 @@ export default function Home() {
     }
   };
 
-  // const clickedMe = () => {
-  //   setShowWarning(true);
-  //   setTimeout(() => setShowWarning(false), 1000);
-  // };
-
   useEffect(() => {
     fetchData();
   }, []);
-
 
 
   return (
@@ -75,9 +69,11 @@ export default function Home() {
           {/* Cards Section */}
           <div className="flex flex-wrap gap-6 justify-center m-4 ml-39 mt-20">
             {posts.slice(1,Math.random()*50).map((post) => (
+              
               <div key={post.id} className="containers">
                 <div className="px-2 text-left align-top rounded text-white">
-                  <h2 className="text-xl font-bold mb-2">{post.title}</h2>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                  <h3 className="text-xl font-bold mb-2">{post.title}</h3>
                   <div className="flex flex-wrap gap-2 mb-2">
                     {post.tags.map((tag, index) => (
                       <Chip key={index} label={tag} variant="outlined" className="text-white"/>
