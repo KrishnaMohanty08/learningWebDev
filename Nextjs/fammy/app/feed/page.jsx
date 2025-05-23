@@ -22,11 +22,11 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
 
-  const updateLikes=()=>{
+  const updateLikes = () => {
     // "use server"
     console.log("likes updated");
   }
-  const updateDislikes=()=>{
+  const updateDislikes = () => {
     // "use server"
     console.log("dislikes updated");
   }
@@ -36,11 +36,11 @@ export default function Home() {
       let req = await fetch("/api/posts");
       let data = await req.json();
       console.log(data.posts)
-      setPosts(data.posts); 
+      setPosts(data.posts);
     } catch (error) {
       console.log("Error fetching data:", error);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
@@ -53,7 +53,7 @@ export default function Home() {
     <>
       <div className="absolute inset-0 -z-10 h-full w-full items-center px-19 py-24 [background:radial-gradient(180%_145%_at_10%_0%,#000_50%,#63e_120%)]"></div>
       <Navbar />
-      <Sidebar/>
+      <Sidebar />
       {loading ? (
         <div className="fixed inset-0 flex items-center justify-center bg-white z-10">
           <lord-icon
@@ -64,19 +64,19 @@ export default function Home() {
         </div>
       ) : (
         <div>
-          
+
 
           {/* Cards Section */}
           <div className="flex flex-wrap gap-6 justify-center m-4 ml-39 mt-20">
-            {posts.slice(1,Math.random()*50).map((post) => (
-              
+            {posts.slice(1, Math.random() * 50).map((post) => (
+
               <div key={post.id} className="containers">
                 <div className="px-2 text-left align-top rounded text-white">
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                  <Avatar alt="Emy Sharp" src={`./images/p4.jpg`} />
                   <h3 className="text-xl font-bold mb-2">{post.title}</h3>
                   <div className="flex flex-wrap gap-2 mb-2">
                     {post.tags.map((tag, index) => (
-                      <Chip key={index} label={tag} variant="outlined" className="text-white"/>
+                      <Chip key={index} label={tag} variant="outlined" className="text-white" />
                     ))}
                   </div>
                   <div>
@@ -93,7 +93,7 @@ export default function Home() {
                       <Button variant="contained" onClick={updateLikes}>Like </Button>
                       <Button variant="contained" onClick={updateDislikes}>DisLike</Button>
                     </div>
-                    
+
                   </div>
                 </div>
               </div>
