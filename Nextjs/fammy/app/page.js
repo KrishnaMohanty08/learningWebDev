@@ -1,9 +1,11 @@
 "use client";
 import "./globals.css";
+import { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
 import Image from "next/image";
 import Footer from "@/components/footer";
 import { Roboto, Geist, Comic_Neue } from "next/font/google";
+import Clip from '@mui/material/Chip'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,14 +21,29 @@ const roboto = Roboto({
 });
 
 export default function Home() {
+  const tagLine=["Where every family finds home.","Sharing stories, growing together.","The heart of your family moments.","Connecting generations, one post at a time.","Your family’s digital table"];
+  const [word,setWords] =useState(0);
+
+  useEffect(() => {
+  const interval = setInterval(() => {
+    setWords(prev => (prev + 1) % tagLine.length);
+  }, 4000); 
+  return () => clearInterval(interval); 
+}, [tagLine.length]);
+
   return (
     <>
       <div className="absolute top-0 -z-10 h-200 w-full bg-white"><div className="absolute bottom-auto left-auto right-0 top-0 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[rgba(173,109,244,0.5)] opacity-50 blur-[80px]"></div></div>
 
       {/* Navbar Container */}
       <Navbar/>
+      <div className={`text-2xl m-3 mt-18 p-4 flex justify-center align-center`}>
+      <span  className={`${comic.className} text-pink-200 mt-2`}>Fammy :</span>
+      <span className="rounded-full p-2 border border-white-t transition-fade-out">{tagLine[word]}</span>
+          
+      </div>
       {/*Blog display */}
-      <main className="m-7 mt-20">
+      <main className="m-7 mt-5">
         <div className="flex my-5 gap-5 text-black p-4 ">
           <div className="duration-300 flex p-1 m-2 border-b border-r border-black rounded-xl shadow-lg ">
             <Image src='/images/p1.png' width={1000} height={750} alt="family photo" className="transform trasition duration-100 cursor-pointer hover:scale-105 rounded-xl"></Image>
