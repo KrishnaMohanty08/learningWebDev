@@ -1,11 +1,3 @@
-<img src="https://r2cdn.perplexity.ai/pplx-full-logo-primary-dark%402x.png" class="logo" width="120"/>
-
-# more discriptive will syntax..
-
-Here’s a **detailed, syntax-rich guide** for using Next.js App Router hooks for search, navigation, and route management, with code examples:
-
----
-
 ## Benefits of Search with URL Params
 
 - **Bookmarkable and shareable URLs:** Search state is stored in the URL, so users can bookmark or share the exact state of the app for later or with others[^1].
