@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI;//"mongodb+srv://mohantykrishna57:YyeCX5o9ZULP6Xrf@fammy.6mszm3w.mongodb.net/";
+const MONGODB_URI = process.env.MONGODB_URI;
 
 if (!MONGODB_URI) {
   console.log("no uri");
