@@ -1,11 +1,3 @@
-<img src="https://r2cdn.perplexity.ai/pplx-full-logo-primary-dark%402x.png" class="logo" width="120"/>
-
-## Rendering Types \& Prerendering in Next.js App Router
-
-**Next.js App Router** supports multiple rendering strategies to optimize performance and user experience. Here’s a clear breakdown:
-
----
-
 ### **Rendering Types**
 
 - **Server-Side Rendering (SSR)**
