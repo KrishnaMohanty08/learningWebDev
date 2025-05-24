@@ -1,11 +1,3 @@
-<img src="https://r2cdn.perplexity.ai/pplx-full-logo-primary-dark%402x.png" class="logo" width="120"/>
-
-# more discriptive
-
-Absolutely! Here’s a **detailed, descriptive study guide** for the Next.js App Router, based on the [official Next.js Learn course](https://nextjs.org/learn), covering all submodules and concepts you’ll encounter:
-
----
-
 ## Next.js App Router Study Guide
 
 
