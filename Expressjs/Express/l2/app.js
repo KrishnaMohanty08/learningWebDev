@@ -5,8 +5,7 @@ const port =4000;
 const route=express.Router();
 
 app.use(express.static('public'))
-app.use(express.urlencoded({ extended: true })); // <== Add this
-
+app.use(express.urlencoded({ extended: true })); 
 
 app.get('/',(req,res)=>{
     res.sendFile(path.join(__dirname,'/templates/index.html'))
