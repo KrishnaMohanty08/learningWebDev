@@ -14,7 +14,7 @@ const Manager = () => {
   // Fetch all passwords from backend
   const getPassword = async () => {
   try {
-    let req = await fetch('http://localhost:3000/');
+    let req = await fetch('https://passop-gn2f.onrender.com/');
     let passwords = await req.json();
     if (Array.isArray(passwords)) {
       setPasswordArray(passwords);
@@ -34,7 +34,7 @@ const Manager = () => {
   const c = window.confirm("Do you want to delete?");
   if (c) {
     try {
-      const response = await fetch(`http://localhost:3000/${encodeURIComponent(urlToDelete)}`, { method: 'DELETE' });
+      const response = await fetch(`https://passop-gn2f.onrender.com/${encodeURIComponent(urlToDelete)}`, { method: 'DELETE' });
       if (response.ok) {
         setPasswordArray(passwordArray.filter(password => password.url !== urlToDelete));
       } else {
@@ -52,7 +52,7 @@ const Manager = () => {
   const savePassword = async () => {
   if (form.url.length > 3 && form.username.length > 3 && form.password.length > 3) {
     try {
-      const response = await fetch('http://localhost:3000/', {
+      const response = await fetch('https://passop-gn2f.onrender.com/', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form)
