@@ -18,7 +18,7 @@ const navBar = () => {
         </li>
       </ul>
       <a className='cursor-pointer' href="https://github.com/KrishnaMohanty08/learningWebDev/tree/main/React/">
-        <img className='w-8 px--8' src="src/components/icons/github.png"/>
+        <img className='w-8 px--8' src="/github.png"/>
       </a>
     </nav>
   )

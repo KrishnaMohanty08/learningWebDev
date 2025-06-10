@@ -13,12 +13,17 @@ const Manager = () => {
 
   // Fetch all passwords from backend
   const getPassword = async () => {
+  try {
     let req = await fetch('http://localhost:3000/');
     let passwords = await req.json();
     if (Array.isArray(passwords)) {
       setPasswordArray(passwords);
     }
-  };
+  } catch (error) {
+    console.error('Error fetching passwords:', error);
+    // alert('Failed to fetch passwords');
+  }
+};
 
   useEffect(() => {
     getPassword();
@@ -26,35 +31,52 @@ const Manager = () => {
 
   // Delete a password by URL
   const deletePassword = async (urlToDelete) => {
-    const c = window.confirm("Do you want to delete?");
-    if (c) {
-      await fetch(`http://localhost:3000/${encodeURIComponent(urlToDelete)}`, { method: 'DELETE' });
-      setPasswordArray(passwordArray.filter(password => password.url !== urlToDelete));
+  const c = window.confirm("Do you want to delete?");
+  if (c) {
+    try {
+      const response = await fetch(`http://localhost:3000/${encodeURIComponent(urlToDelete)}`, { method: 'DELETE' });
+      if (response.ok) {
+        setPasswordArray(passwordArray.filter(password => password.url !== urlToDelete));
+      } else {
+        console.error('Failed to delete password');
+        alert('Failed to delete password');
+      }
+    } catch (error) {
+      console.error('Error deleting password:', error);
+      alert('Error deleting password');
     }
-  };
+  }
+};
 
   // Save a new password
   const savePassword = async () => {
-    if (form.url.length > 3 && form.username.length > 3 && form.password.length > 3) {
-      await fetch('http://localhost:3000/', {
+  if (form.url.length > 3 && form.username.length > 3 && form.password.length > 3) {
+    try {
+      const response = await fetch('http://localhost:3000/', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form)
       });
-      setPasswordArray([...passwordArray, form]);
-      setForm({ url: "", username: "", password: "" });
+      if (response.ok) {
+        setPasswordArray([...passwordArray, form]);
+        setForm({ url: "", username: "", password: "" });
+      } else {
+        console.error('Failed to save password');
+        alert('Failed to save password');
+      }
+    } catch (error) {
+      console.error('Error saving password:', error);
+      alert('Error saving password');
     }
-  };
+  }
+};
 
   // Toggle password visibility
+  const [showPassword, setShowPassword] = useState(false);
   const hidePassword = () => {
-    if (refEye.current.src.includes('eye.png')) {
-      refEye.current.src = '/src/components/icons/invisible.png';
-      refPassword.current.type = 'text';
-    } else {
-      refEye.current.src = '/src/components/icons/eye.png';
-      refPassword.current.type = "password";
-    }
+    setShowPassword(!showPassword);
+    refPassword.current.type = showPassword ? 'password' : 'text';
+    refEye.current.src = showPassword ? '/eye.png' : '/invisible.png';
   };
 
   return (
@@ -107,7 +129,7 @@ const Manager = () => {
                 <span className='absolute right-[2px]'>
                   <img
                     ref={refEye}
-                    src='/src/components/icons/eye.png'
+                    src='/eye.png'
                     className='p-1 w-7 cursor-pointer'
                     onClick={hidePassword}
                     alt="Toggle visibility"
@@ -115,8 +137,8 @@ const Manager = () => {
                 </span>
               </div>
             </div>
-            <div className="flex  cursor-pointer justify-center items-center py-2 rounded-full">
-              <button onClick={savePassword} className="flex px-2 justify-center items-center bg-gray-300 w-fit rounded">
+            <div className="flex   justify-center items-center py-2 rounded-full">
+              <button onClick={savePassword} className="hover:cursor-pointer flex px-2 justify-center items-center bg-gray-300 w-fit rounded">
                 <lord-icon
                   className="w-8 h-8"
                   src="https://cdn.lordicon.com/efxgwrkc.json"
