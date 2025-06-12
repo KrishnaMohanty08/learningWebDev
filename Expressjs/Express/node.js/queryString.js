@@ -23,3 +23,6 @@ const isURL = new URL('/foo', 'https://example.org/');
 //In cases where it is not known in advance if input is an absolute URL and a base is provided, it is advised to validate that the origin of the URL object is what is expected.
 someURL = new URL('https://Example.com/', 'https://example.org/');
 // https://example.com/
+
+//useParams: For extracting values from the route path (e.g., /user/:id).
+//useSearchParams: For reading and updating query parameters (e.g., ?page=2).
