@@ -35,8 +35,8 @@ router.post('/login', (req, res, next) => {
     try {
         if (username === "krish" && password === "***") {
             console.log("Welcome")
-            //res.sendFile(path.join(__dirname,"../Templates/shop.ejs"));
-            res.render('shop',{items}) ;
+            res.redirect('/shop');
+            // res.render('shop',{items}) ;
         } else {
             throw new Error("Invalid credential");
         }
@@ -52,5 +52,9 @@ router.get('/shop/:name', (req, res) => {
     console.log(filteredItems);
     res.render("shop", { items: filteredItems }); 
 });
+
+router.get('/shop',(req,res)=>{
+    res.render('shop',{items})
+})
 
 module.exports = router;
