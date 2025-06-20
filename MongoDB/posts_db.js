@@ -1,7 +1,7 @@
 const mongoose =require("mongoose");
 const Post =require("./Post.js"); 
 
-const MONGODB_URI = 'mongodb+srv://mohantykrishna57:YyeCX5o9ZULP6Xrf@fammy.6mszm3w.mongodb.net/Post';
+const MONGODB_URI = 'mongo  ui';
 
 const usernames = [
   "krish_123",
